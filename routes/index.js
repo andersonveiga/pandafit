@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 
 router.get('/score/:userid', function (req, res, next) {
   var userdId = parseInt(req.params.userid);
-  models.User.findOne({'userId': userid}, function (user) {
+  models.User.findOne({'userId': userid}, function (err, user) {
+    if (err) return console.error(err);
     res.send({"score": user.score});
   });
 
@@ -22,7 +23,8 @@ router.post('/steps/:userid', function (req, res, next) {
   console.log("userid " + userid);
   var steps = parseInt(req.body.numSteps);
   console.log("GOT: " + JSON.stringify(req.body));
-  models.User.findOne({'userId': userid}, function (user) {
+  models.User.findOne({'userId': userid}, function (err, user) {
+    if (err) return console.error(err);
     console.log("USER: " + user.name);
 
     var multiplier;

@@ -32,7 +32,8 @@ function createSomeUsers() {
     saveUser('Felix', 'Schwarzenpanda', 3);
 }
 
-User.find({}).count().then(function (nUsers) {
+User.find({}).count().then(function (err, nUsers) {
+    if (err) return console.error(err);
     numUsers = nUsers;
 
     console.log("numUsers: " + nUsers);
