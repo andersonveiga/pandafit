@@ -10,9 +10,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/score/:userid', function (req, res, next) {
-  var userdId = req.params.userid;
-  var user = models.User.findOne({'userId': userid});
-  res.send({"score": user.score});
+  var userdId = parseInt(req.params.userid);
+  models.User.findOne({'userId': userid}, function (user) {
+    res.send({"score": user.score});
+  });
+
 });
 
 router.post('/steps/:userid', function (req, res, next) {
@@ -20,18 +22,19 @@ router.post('/steps/:userid', function (req, res, next) {
   console.log("userid " + userid);
   var steps = parseInt(req.body.numSteps);
   console.log("GOT: " + JSON.stringify(req.body));
-  var user = models.User.findOne({'userId': userid});
-  console.log("USER: " + user.name);
+  models.User.findOne({'userId': userid}, function (user) {
+    console.log("USER: " + user.name);
 
-  var multiplier;
-  if (user.activityLevel == 1){
-    multiplier = 0.006;
-  } else if (user.activityLevel == 2) {
-    multiplier = 0.005;
-  } else multiplier = 0.004;
+    var multiplier;
+    if (user.activityLevel == 1){
+      multiplier = 0.006;
+    } else if (user.activityLevel == 2) {
+      multiplier = 0.005;
+    } else multiplier = 0.004;
 
-  var score = user.score + multiplier * steps;
-  models.User.update({'userId': userid}, {'score': score});
+    var score = user.score + multiplier * steps;
+    models.User.update({'userId': userid}, {'score': score});
+  });
 });
 
 module.exports = router;
