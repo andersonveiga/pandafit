@@ -54,10 +54,13 @@ var pokemon = ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "
 function createRandomUser(name, callback){
     var randPkmn = pokemon[Math.floor(Math.random() * pokemon.length)];
     var activity = Math.floor(Math.random() * 3) + 1;
+    var randscore = Math.floor(Math.random() * 130);
     saveUser(name, randPkmn, activity, function (res) {
-        console.log("Created random user! " + JSON.stringify(res));
-        callback(res);
-    })
+        User.update({"userId": res.userId}, {"score": randscore}).then(function (res) {
+            console.log("Created random user! " + JSON.stringify(res));
+            callback(res);
+        });
+    });
 }
 
 var to = setTimeout(deductPoints, 10 * 1000, process.pid, process.arch);
