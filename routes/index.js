@@ -9,18 +9,43 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/score/:userid', function (req, res, next) {
-  var userid = parseInt(req.params.userid);
+router.get('/users/:userid', function (req, res, next) {
+  var userid = req.params.userid;
+
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
-    console.log("Sending score: " + user.score);
-    res.send({"score": user.score});
+    if (!user){
+      models.createRandomUser(userid, function (res) {
+        console.log("(created new user) " + JSON.stringify(res));
+        res.send(user);
+      });
+    }else{
+      console.log("Sending user: " + JSON.stringify(user));
+      res.send(user);
+    }
+};
+
+router.get('/score/:userid', function (req, res, next) {
+  var userid = req.params.userid;
+  models.User.findOne({'userId': userid}, function (err, user) {
+    if (err) return console.error(err);
+    if (!user){
+      models.createRandomUser(userid, function (res) {
+        console.log("(created new user)");
+        res.send({"score": res.score});
+      });
+    }else{
+      console.log("Sending score: " + user.score);
+      res.send({"score": user.score});
+    }
+
+
   });
 
 });
 
 router.post('/steps/:userid', function (req, res, next) {
-  var userid = parseInt(req.params.userid);
+  var userid = req.params.userid;
   console.log("userid " + userid);
   var steps = parseInt(req.body.numSteps);
   console.log("GOT: " + JSON.stringify(req.body));
