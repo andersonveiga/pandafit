@@ -1,13 +1,35 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require("body-parser");
+var models = require("../models/models");
+app.use(bodyParser.json());
+
+var scores = {};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/score/1', function (req, res, next) {
+router.get('/score/:userid', function (req, res, next) {
+  var userdId = req.params.userid;
   res.send({"score": 50});  // TODO get from data
+});
+
+router.post('/steps/:userid', function (req, res, next) {
+  var userid = req.params.userid;
+  var steps = req.body.numSteps;
+  var user = models.User.findOne({'userId': userid});
+
+  var multiplier;
+  if (user.activityLevel == 1){
+    multiplier = 0.006;
+  } else if (user.activityLevel == 2) {
+    multiplier = 0.005;
+  } else multiplier = 0.004;
+
+  var score = user.score + multiplier * steps;
+  models.User.update({'userId': userid}, {'score': score});
 });
 
 module.exports = router;
