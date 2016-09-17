@@ -31,7 +31,7 @@ function createSomeUsers() {
     saveUser('Felix', 'Schwarzenpanda', 3);
 }
 
-var numUsers = User.find().count();
+var numUsers = User.find({}).count();
 if (numUsers == 0){
     createSomeUsers();
 }else{
