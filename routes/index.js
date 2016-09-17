@@ -37,7 +37,7 @@ router.get('/score/:userid', function (req, res, next) {
       });
     }else{
       console.log("Sending score: " + user.score);
-      res.send({"score": user.score});
+      res.send({"score": Math.floor(user.score)});
     }
 
 
@@ -48,7 +48,9 @@ router.get('/score/:userid', function (req, res, next) {
 router.post('/steps/:userid', function (req, res, next) {
   var userid = req.params.userid;
   console.log("userid " + userid);
+
   var steps = parseInt(req.body.numSteps);
+
   console.log("GOT: " + JSON.stringify(req.body));
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
@@ -56,10 +58,10 @@ router.post('/steps/:userid', function (req, res, next) {
 
     var multiplier;
     if (user.activityLevel == 1){
-      multiplier = 0.006;
+      multiplier = 0.06;
     } else if (user.activityLevel == 2) {
-      multiplier = 0.005;
-    } else multiplier = 0.004;
+      multiplier = 0.05;
+    } else multiplier = 0.04;
 
     var score = user.score + multiplier * steps;
     console.log("Updated score is: " + score);
