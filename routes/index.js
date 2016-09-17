@@ -23,7 +23,7 @@ router.get('/users/:userid', function (req, res, next) {
       console.log("Sending user: " + JSON.stringify(user));
       res.send(user);
     }
-};
+});
 
 router.get('/score/:userid', function (req, res, next) {
   var userid = req.params.userid;
