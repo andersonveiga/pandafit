@@ -14,15 +14,16 @@ router.get('/users/:userid', function (req, res, next) {
 
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
-    if (!user){
+    if (!user) {
       models.createRandomUser(userid, function (res) {
         console.log("(created new user) " + JSON.stringify(res));
         res.send(user);
       });
-    }else{
+    } else {
       console.log("Sending user: " + JSON.stringify(user));
       res.send(user);
     }
+  });
 });
 
 router.get('/score/:userid', function (req, res, next) {
