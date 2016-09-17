@@ -13,6 +13,7 @@ router.get('/score/:userid', function (req, res, next) {
   var userid = parseInt(req.params.userid);
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
+    console.log("Sending score: " + user.score);
     res.send({"score": user.score});
   });
 

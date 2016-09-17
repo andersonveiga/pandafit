@@ -15,7 +15,7 @@ var User = mongoose.model('User', {
 });
 
 function saveUser(name, avatarName, activityLevel) {
-    var newUser = new User({ name: name, avatarName: avatarName, activityLevel: activityLevel, userId: numUsers+1});
+    var newUser = new User({ name: name, avatarName: avatarName, activityLevel: activityLevel, userId: numUsers+1, score: 50});
     newUser.save(function (err) {
         if(err){
             console.log(err);
