@@ -31,15 +31,17 @@ function createSomeUsers() {
     saveUser('Felix', 'Schwarzenpanda', 3);
 }
 
-var numUsers = User.find({}).count();
-console.log("numUsers: " + numUsers);
-if (numUsers == 0){
-    createSomeUsers();
-}else{
-    User.find({}, function (res) {
-        console.log(res);
-    });
-}
+User.find({}).count().then(function (numUsers) {
+    console.log("numUsers: " + numUsers);
+    if (numUsers == 0){
+        createSomeUsers();
+    }else {
+        User.find({}, function (res) {
+            console.log(res);
+        });
+    }
+});
+
 
 module.exports = {
   User: User
