@@ -18,7 +18,7 @@ router.get('/score/:userid', function (req, res, next) {
 router.post('/steps/:userid', function (req, res, next) {
   var userid = parseInt(req.params.userid);
   console.log("userid " + userid);
-  var steps = req.body.numSteps;
+  var steps = parseInt(req.body.numSteps);
   console.log("GOT: " + JSON.stringify(req.body));
   var user = models.User.findOne({'userId': userid});
   console.log("USER: " + user.name);
