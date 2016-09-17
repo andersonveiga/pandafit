@@ -32,6 +32,7 @@ function createSomeUsers() {
 }
 
 var numUsers = User.find({}).count();
+console.log("numUsers: " + numUsers);
 if (numUsers == 0){
     createSomeUsers();
 }else{
