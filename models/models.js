@@ -20,7 +20,7 @@ function saveUser(name, avatarName, activityLevel) {
         if(err){
             console.log(err);
         } else {
-            console.log('Could not save User.')
+            console.log('Could actually save User.')
         }
     });
     numUsers++;
