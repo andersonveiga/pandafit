@@ -9,18 +9,21 @@ var numUsers = 0;
 var User = mongoose.model('User', {
     name: String,
     avatarName: String,
-    userId: Number,
+    userId: String,
     score: Number,
     activityLevel: Number
 });
 
-function saveUser(name, avatarName, activityLevel) {
-    var newUser = new User({ name: name, avatarName: avatarName, activityLevel: activityLevel, userId: numUsers+1, score: 50});
-    newUser.save(function (err) {
+function saveUser(name, avatarName, activityLevel, callback) {
+    var newUser = new User({ name: name, avatarName: avatarName, activityLevel: activityLevel, userId: "" + (numUsers + 1), score: 50});
+    newUser.save(function (err, res) {
         if(err){
             console.log(err);
         } else {
-            console.log('Could actually save User.')
+            console.log('Saved user.');
+            if (callback){
+                callback(res);
+            }
         }
     });
     numUsers++;
@@ -46,18 +49,27 @@ User.find({}).count().then(function (err, nUsers) {
     }
 });
 
+var pokemon = ["Bulbasaur", "Ivysaur", "Venusaur", "Charmander", "Charmeleon", "Charizard", "Squirtle", "Wartortle", "Blastoise", "Caterpie", "Metapod", "Butterfree", "Weedle", "Kakuna", "Beedrill", "Pidgey", "Pidgeotto", "Pidgeot", "Rattata", "Raticate", "Spearow", "Fearow", "Ekans", "Arbok", "Pikachu", "Raichu", "Sandshrew", "Sandslash", "Nidoran♀", "Nidorina", "Nidoqueen", "Nidoran♂", "Nidorino", "Nidoking", "Clefairy", "Clefable", "Vulpix", "Ninetales", "Jigglypuff", "Wigglytuff", "Zubat", "Golbat", "Oddish", "Gloom", "Vileplume", "Paras", "Parasect", "Venonat", "Venomoth", "Diglett", "Dugtrio", "Meowth", "Persian", "Psyduck", "Golduck", "Mankey", "Primeape", "Growlithe", "Arcanine", "Poliwag", "Poliwhirl", "Poliwrath", "Abra", "Kadabra", "Alakazam", "Machop", "Machoke", "Machamp", "Bellsprout", "Weepinbell", "Victreebel", "Tentacool", "Tentacruel", "Geodude", "Graveler", "Golem", "Ponyta", "Rapidash", "Slowpoke", "Slowbro", "Magnemite", "Magneton", "Farfetch'd", "Doduo", "Dodrio", "Seel", "Dewgong", "Grimer", "Muk", "Shellder", "Cloyster", "Gastly", "Haunter", "Gengar", "Onix", "Drowzee", "Hypno", "Krabby", "Kingler", "Voltorb", "Electrode", "Exeggcute", "Exeggutor", "Cubone", "Marowak", "Hitmonlee", "Hitmonchan", "Lickitung", "Koffing", "Weezing", "Rhyhorn", "Rhydon", "Chansey", "Tangela", "Kangaskhan", "Horsea", "Seadra", "Goldeen", "Seaking", "Staryu", "Starmie", "Mr. Mime", "Scyther", "Jynx", "Electabuzz", "Magmar", "Pinsir", "Tauros", "Magikarp", "Gyarados", "Lapras", "Ditto", "Eevee", "Vaporeon", "Jolteon", "Flareon", "Porygon", "Omanyte", "Omastar", "Kabuto", "Kabutops", "Aerodactyl", "Snorlax", "Articuno", "Zapdos", "Moltres", "Dratini", "Dragonair", "Dragonite", "Mewtwo", "Mew"];
+
+function createRandomUser(name){
+    var randPkmn = pokemon[Math.floor(Math.random() * pokemon.length)];
+    var activity = Math.floor(Math.random() * 3) + 1;
+    saveUser(name, randPkmn, activity)
+}
+
 var to = setTimeout(deductPoints, 10 * 1000, process.pid, process.arch);
 
 function deductPoints(id, arch){
     console.log('The process id is %d and the processor architecture is %s', id, arch);
-    User.update({}, {'$inc': {"score": -1}}).exec();
+    User.update({"score": {"$gt": 1}}, {'$inc': {"score": -1}}).exec();
     to = setTimeout(deductPoints, 10 * 1000, id, arch);
 }
 console.log('done');
 
 
 module.exports = {
-  User: User
+  User: User,
+  createRandomUser: createRandomUser
 };
 
 
