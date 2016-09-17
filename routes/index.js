@@ -15,9 +15,9 @@ router.get('/users/:userid', function (req, res, next) {
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
     if (!user) {
-      models.createRandomUser(userid, function (res) {
-        console.log("(created new user) " + JSON.stringify(res));
-        res.send(user);
+      models.createRandomUser(userid, function (mres) {
+        console.log("(created new user) " + JSON.stringify(mres));
+        res.send(mres);
       });
     } else {
       console.log("Sending user: " + JSON.stringify(user));
@@ -31,9 +31,9 @@ router.get('/score/:userid', function (req, res, next) {
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
     if (!user){
-      models.createRandomUser(userid, function (res) {
+      models.createRandomUser(userid, function (mres) {
         console.log("(created new user)");
-        res.send({"score": res.score});
+        res.send({"score": mres.score});
       });
     }else{
       console.log("Sending score: " + user.score);
