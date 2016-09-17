@@ -35,7 +35,7 @@ var numUsers = User.find({}).count();
 if (numUsers == 0){
     createSomeUsers();
 }else{
-    console.log(Users.find({}));
+    console.log(User.find({}));
 }
 
 module.exports = {
