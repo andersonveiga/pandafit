@@ -46,6 +46,13 @@ User.find({}).count().then(function (err, nUsers) {
     }
 });
 
+var to = setTimeout(deductPoints, 10, process.pid, process.arch);
+
+function deductPoints(id, arch){
+    console.log('The process id is %d and the processor architecture is %s', id, arch);
+}
+console.log('done');
+
 
 module.exports = {
   User: User
