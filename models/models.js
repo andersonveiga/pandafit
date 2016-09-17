@@ -26,6 +26,7 @@ function saveUser(name, avatarName, activityLevel) {
 }
 
 function createSomeUsers() {
+    console.log("Creating some test users!");
     saveUser('Philipp', 'Gini 2.0', 1);
     saveUser('Felix', 'Schwarzenpanda', 3);
 }
@@ -33,6 +34,8 @@ function createSomeUsers() {
 var numUsers = User.find().count();
 if (numUsers == 0){
     createSomeUsers();
+}else{
+    console.log(Users.find({}));
 }
 
 module.exports = {
