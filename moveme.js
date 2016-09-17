@@ -35,34 +35,34 @@ var scope_vars = ['activity'];
 //     console.log(error);
 //   });
 
-function getDateParameter() {
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; 
+// function getDateParameter() {
+// 	var today = new Date();
+// 	var dd = today.getDate();
+// 	var mm = today.getMonth()+1; 
 
-	var yyyy = today.getFullYear();
-	if(dd<10){
-	    dd='0'+dd
-	} 
-	if(mm<10){
-	    mm='0'+mm
-	} 
+// 	var yyyy = today.getFullYear();
+// 	if(dd<10){
+// 	    dd='0'+dd
+// 	} 
+// 	if(mm<10){
+// 	    mm='0'+mm
+// 	} 
 
-	return yyyy+'-'+mm+'-'+dd;
-}
+// 	return yyyy+'-'+mm+'-'+dd;
+// }
 
-// GET DATA
-axios.request({
-	url: 'https://api.fitbit.com/1/user/4XTL4C/activities/date/'+getDateParameter()+'.json',
-	method: 'get',
-	headers: {
-		'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0WFRMNEMiLCJhdWQiOiIyMjdaNloiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IiwiZXhwIjoxNDc0MTAzNzYyLCJpYXQiOjE0NzQwNzQ5NjJ9.aQSbhtFeFOjfPgjlIpcmpEDgS9QWIKhky-OApz1014Q',
-		'Content-Type': 'application/x-www-form-urlencoded'
-	}
-})
-  .then(function (response) {
-    console.log(response.data.summary.steps);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+// // GET DATA
+// axios.request({
+// 	url: 'https://api.fitbit.com/1/user/4XTL4C/activities/date/'+getDateParameter()+'.json',
+// 	method: 'get',
+// 	headers: {
+// 		'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI0WFRMNEMiLCJhdWQiOiIyMjdaNloiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IiwiZXhwIjoxNDc0MTAzNzYyLCJpYXQiOjE0NzQwNzQ5NjJ9.aQSbhtFeFOjfPgjlIpcmpEDgS9QWIKhky-OApz1014Q',
+// 		'Content-Type': 'application/x-www-form-urlencoded'
+// 	}
+// })
+//   .then(function (response) {
+//     console.log(response.data.summary.steps);
+//   })
+//   .catch(function (error) {
+//     console.log(error);
+//   });
