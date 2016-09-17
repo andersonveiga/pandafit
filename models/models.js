@@ -51,7 +51,7 @@ var to = setTimeout(deductPoints, 10 * 1000, process.pid, process.arch);
 function deductPoints(id, arch){
     console.log('The process id is %d and the processor architecture is %s', id, arch);
     User.update({}, {'$inc': {"score": -1}});
-    to = setTimeout(deductPoints, 10 * 1000, id, arch);
+    to = setTimeout(deductPoints, 10 * 1000, id, arch).exec();
 }
 console.log('done');
 
