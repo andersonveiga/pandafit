@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var bodyParser = require("body-parser");
 var models = require("../models/models");
-var app = require("../app");
-app.use(bodyParser.json());
 
 var scores = {};
 
