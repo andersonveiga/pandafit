@@ -65,11 +65,14 @@ router.post('/steps/:userid', function (req, res, next) {
 
     var score = user.score + multiplier * steps;
     console.log("Updated score is: " + score);
-    models.User.update({'userId': userid}, {'score': score}, function (err, mres) {
+    models.User.update({'userId': userid}, {'score': score}, function (err, _) {
       if (err){
         console.log(err);
       }
-      res.send({'score': mres});
+      models.User.findOne({'userId': userid}, function (err, user) {
+        res.send({'score': user.score});
+      });
+
     });
 
   });
