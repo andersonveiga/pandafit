@@ -17,10 +17,11 @@ router.get('/score/:userid', function (req, res, next) {
 
 router.post('/steps/:userid', function (req, res, next) {
   var userid = parseInt(req.params.userid);
+  console.log("userid " + userid);
   var steps = req.body.numSteps;
   console.log("GOT: " + JSON.stringify(req.body));
   var user = models.User.findOne({'userId': userid});
-  console.log("USER: " + JSON.stringify(user));
+  console.log("USER: " + user.name);
 
   var multiplier;
   if (user.activityLevel == 1){
