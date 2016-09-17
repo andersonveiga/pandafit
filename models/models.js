@@ -4,6 +4,7 @@
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/test');
 
+var numUsers = 0;
 
 var User = mongoose.model('User', {
     name: String,
@@ -14,7 +15,6 @@ var User = mongoose.model('User', {
 });
 
 function saveUser(name, avatarName, activityLevel) {
-    var numUsers = User.find({}).count();
     var newUser = new User({ name: name, avatarName: avatarName, activityLevel: activityLevel, userId: numUsers+1});
     newUser.save(function (err) {
         if(err){
@@ -23,6 +23,7 @@ function saveUser(name, avatarName, activityLevel) {
             console.log('Could not save User.')
         }
     });
+    numUsers++;
 }
 
 function createSomeUsers() {
@@ -31,9 +32,11 @@ function createSomeUsers() {
     saveUser('Felix', 'Schwarzenpanda', 3);
 }
 
-User.find({}).count().then(function (numUsers) {
-    console.log("numUsers: " + numUsers);
-    if (numUsers == 0){
+User.find({}).count().then(function (nUsers) {
+    numUsers = nUsers;
+
+    console.log("numUsers: " + nUsers);
+    if (nUsers == 0){
         createSomeUsers();
     }else {
         User.find({}, function (res) {
