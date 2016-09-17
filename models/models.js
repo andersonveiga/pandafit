@@ -37,7 +37,7 @@ User.find({}).count().then(function (err, nUsers) {
     numUsers = nUsers;
 
     console.log("numUsers: " + nUsers);
-    if (nUsers == 0){
+    if (!nUsers){
         createSomeUsers();
     }else {
         User.find({}, function (res) {
