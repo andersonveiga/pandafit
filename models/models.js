@@ -57,7 +57,10 @@ function createRandomUser(name, callback){
     var randscore = Math.floor(Math.random() * 130);
     saveUser(name, randPkmn, activity, function (res) {
         User.update({"userId": res.userId}, {"score": randscore}).then(function (__res) {
-            User.findOne({"userId": res.userId}, function (res) {
+            User.findOne({"userId": res.userId}, function (err, res) {
+                if(err){
+                    console.log(err);
+                }
                 console.log("Created random user! " + JSON.stringify(res));
                 callback(res);
             });
