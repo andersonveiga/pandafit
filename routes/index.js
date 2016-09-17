@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/score/:userid', function (req, res, next) {
-  var userdId = parseInt(req.params.userid);
+  var userid = parseInt(req.params.userid);
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
     res.send({"score": user.score});
@@ -25,7 +25,7 @@ router.post('/steps/:userid', function (req, res, next) {
   console.log("GOT: " + JSON.stringify(req.body));
   models.User.findOne({'userId': userid}, function (err, user) {
     if (err) return console.error(err);
-    console.log("USER: " + user.name);
+    console.log("USER: " + JSON.stringify(user));
 
     var multiplier;
     if (user.activityLevel == 1){
