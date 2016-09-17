@@ -37,11 +37,11 @@ router.post('/steps/:userid', function (req, res, next) {
 
     var score = user.score + multiplier * steps;
     console.log("Updated score is: " + score);
-    models.User.update({'userId': userid}, {'score': score}, function (err, res) {
+    models.User.update({'userId': userid}, {'score': score}, function (err, mres) {
       if (err){
         console.log(err);
       }
-      res.send({'score': res});
+      res.send({'score': mres});
     });
 
   });
