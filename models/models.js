@@ -14,7 +14,7 @@ var User = mongoose.model('User', {
 });
 
 function saveUser(name, avatarName, activityLevel) {
-    var numUsers = User.find().count();
+    var numUsers = User.find({}).count();
     var newUser = new User({ name: name, avatarName: avatarName, activityLevel: activityLevel, userId: numUsers+1});
     newUser.save(function (err) {
         if(err){
@@ -25,8 +25,15 @@ function saveUser(name, avatarName, activityLevel) {
     });
 }
 
-saveUser('Philipp', 'Gini 2.0', 1);
-saveUser('Felix', 'Schwarzenpanda', 3);
+function createSomeUsers() {
+    saveUser('Philipp', 'Gini 2.0', 1);
+    saveUser('Felix', 'Schwarzenpanda', 3);
+}
+
+var numUsers = User.find().count();
+if (numUsers == 0){
+    createSomeUsers();
+}
 
 module.exports = {
   User: User
