@@ -6,7 +6,7 @@ var scores = {};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'PandaFit' });
 });
 
 router.get('/users/:userid', function (req, res, next) {
