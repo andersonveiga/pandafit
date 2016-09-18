@@ -31,7 +31,7 @@ function saveUser(name, avatarName, activityLevel, callback) {
 
 function createSomeUsers() {
     console.log("Creating some test users!");
-    saveUser('Philipp', 'Gini 2.0', 1);
+    saveUser('Philipp', 'Gini 2.0', "Philipp");
     saveUser('Felix', 'Schwarzenpanda', 3);
 }
 
@@ -62,12 +62,12 @@ function createRandomUser(name, callback){
     });
 }
 
-var to = setTimeout(deductPoints, 10 * 1000, process.pid, process.arch);
+var to = setTimeout(deductPoints, 10 * 1000);
 
 function deductPoints(id, arch){
-    console.log('The process id is %d and the processor architecture is %s', id, arch);
-    User.update({"score": {"$gt": 1}}, {'$inc': {"score": -1}}, {multi: true}).exec();
-    to = setTimeout(deductPoints, 10 * 1000, id, arch);
+    console.log("Decaying points..");
+    User.update({"score": {"$gt": 1.9999999}}, {'$inc': {"score": -1}}, {multi: true}).exec();
+    to = setTimeout(deductPoints, 10 * 1000);
 }
 console.log('done');
 
