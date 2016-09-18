@@ -31,11 +31,13 @@ function getSteps(steps_counter, url, auth) {
 				incrementalSteps = response.summary.steps - lastValue;
 			}
 
-			if (incrementalSteps) {
+			if (incrementalSteps > 0) {
 				// send steps to server
 				$.get('https://76798aa7.ngrok.io/poststeps', {steps: incrementalSteps}, function(){
 
 				});
+			} else {
+				incrementalSteps = 0;
 			}
 
 			lastValue = response.summary.steps;
